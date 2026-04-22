@@ -11,7 +11,7 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://blog-it6f10zxk-beankong-githubs-projects.vercel.app',
+  url: 'https://blog-tau-two-81.vercel.app',
   baseUrl: '/',
 
   organizationName: 'beankong-github',
