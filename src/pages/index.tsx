@@ -1,4 +1,4 @@
-import {type ReactNode, useState} from 'react';
+import {type ReactNode, useState, useRef, useEffect} from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -113,9 +113,22 @@ function TagPills({selectedTag, onSelect}: {selectedTag: string | null; onSelect
   const tags = Object.values(blogData?.blogTags ?? {})
     .sort((a, b) => b.count - a.count);
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const check = () => setShouldScroll(wrapper.scrollWidth > wrapper.clientWidth);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(wrapper);
+    return () => ro.disconnect();
+  }, [tags.length]);
+
   if (tags.length === 0) return null;
 
-  const looped = [...tags, ...tags, ...tags];
+  const looped = shouldScroll ? [...tags, ...tags, ...tags] : tags;
 
   return (
     <div className={styles.tickerRow}>
@@ -125,8 +138,8 @@ function TagPills({selectedTag, onSelect}: {selectedTag: string | null; onSelect
       >
         <span className={styles.cardTitle}>전체</span>
       </button>
-      <div className={styles.tickerWrapper}>
-        <div className={styles.tickerTrack}>
+      <div className={`${styles.tickerWrapper} ${shouldScroll ? styles.tickerWrapperMask : ''}`} ref={wrapperRef}>
+        <div className={`${styles.tickerTrack} ${shouldScroll ? styles.tickerTrackAnimated : styles.tickerTrackStatic}`}>
           {looped.map((tag, i) => (
             <button
               key={i}
@@ -161,19 +174,19 @@ export default function Home(): ReactNode {
         <section className={styles.section1}>
           <div className={styles.hero}>
             <img src="/img/hero-spider.png" alt="hero" className={styles.heroImage} />
-            <div className={styles.heroActions}>
-              <button
-                className={`button button--lg ${tab === 'notes' ? 'button--primary' : 'button--outline'}`}
-                onClick={() => handleTabChange('notes')}
-              >
-                Notes
-              </button>
-              <button
-                className={`button button--lg ${tab === 'blog' ? 'button--primary' : 'button--outline'}`}
-                onClick={() => handleTabChange('blog')}
-              >
-                Blog
-              </button>
+            <div
+              className={styles.tabSwitch}
+              onClick={() => handleTabChange(tab === 'notes' ? 'blog' : 'notes')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab === 'notes' ? 'blog' : 'notes')}
+            >
+              <span
+                className={`${styles.tabIndicator} ${tab === 'blog' ? styles.tabIndicatorRight : ''}`}
+                aria-hidden
+              />
+              <span className={`${styles.tabBtn} ${tab === 'notes' ? styles.tabBtnActive : ''}`}>Notes</span>
+              <span className={`${styles.tabBtn} ${tab === 'blog' ? styles.tabBtnActive : ''}`}>Blog</span>
             </div>
           </div>
 

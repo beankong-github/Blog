@@ -1,19 +1,43 @@
-facebook:
-  label: Facebook
-  permalink: /facebook
-  description: Facebook tag description
+UnrealEngine:
+  label: UnrealEngine
+  permalink: /unreal-engine
 
-hello:
-  label: Hello
-  permalink: /hello
-  description: Hello tag description
+Gameplay:
+  label: Gameplay
+  permalink: /gameplay
 
-docusaurus:
-  label: Docusaurus
-  permalink: /docusaurus
-  description: Docusaurus tag description
+Graphics:
+  label: Graphics
+  permalink: /graphics
 
-hola:
-  label: Hola
-  permalink: /hola
-  description: Hola tag description
+Tools:
+  label: Tools
+  permalink: /tools
+
+AI:
+  label: AI
+  permalink: /ai
+
+CPP:
+  label: C++
+  permalink: /cpp
+
+Profiling:
+  label: Profiling
+  permalink: /profiling
+
+VFX:
+  label: VFX
+  permalink: /vfx
+
+LLM:
+  label: LLM
+  permalink: /llm
+
+Memory:
+  label: Memory
+  permalink: /memory
+
+Blog:
+  label: Blog
+  permalink: /blog-tag

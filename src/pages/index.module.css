@@ -30,7 +30,9 @@
 
 /* ── Hero ── */
 .hero {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2.5rem 0 1.5rem;
 }
 
@@ -59,6 +61,66 @@
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* ── Tab Switch ── */
+.tabSwitch {
+  display: inline-flex;
+  position: relative;
+  margin-top: 1.5rem;
+  border-radius: 999px;
+  padding: 3px;
+  background-color: var(--ifm-color-emphasis-200);
+  cursor: pointer;
+  user-select: none;
+}
+
+[data-theme='dark'] .tabSwitch {
+  background-color: #2a2a2a;
+}
+
+.tabIndicator {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.22s ease;
+  pointer-events: none;
+}
+
+.tabIndicatorRight {
+  transform: translateX(100%);
+}
+
+[data-theme='dark'] .tabIndicator {
+  background-color: #A5C5B0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+.tabBtn {
+  position: relative;
+  z-index: 1;
+  padding: 0.4rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-content-secondary);
+  transition: color 0.18s ease;
+}
+
+.tabBtn:hover {
+  color: var(--ifm-color-content);
+}
+
+.tabBtnActive {
+  color: #1a1a1a !important;
 }
 
 /* ── Category Grid ── */
@@ -313,6 +375,9 @@
   overflow: hidden;
   flex: 1;
   min-width: 0;
+}
+
+.tickerWrapperMask {
   mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
@@ -321,10 +386,18 @@
   display: flex;
   gap: 0.6rem;
   width: max-content;
+}
+
+.tickerTrackStatic {
+  flex-wrap: wrap;
+  width: auto;
+}
+
+.tickerTrackAnimated {
   animation: tickerScroll 28s linear infinite;
 }
 
-.tickerWrapper:hover .tickerTrack {
+.tickerWrapper:hover .tickerTrackAnimated {
   animation-play-state: paused;
 }
 
