@@ -1,137 +1,309 @@
+/* 본문 + 제목 폰트 */
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* 코딩 폰트 */
+@font-face {
+    font-family: 'D2Coding';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/D2Coding.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
 /**
- * Ollama-style dark theme
- * Primary: blue accent on dark gray background
+ * Ollama docs style
+ * - 우측 TOC 없음, 콘텐츠 넓게
+ * - 다크 그레이 배경, 미니멀 사이드바
+ * - 카테고리 대문자, 아이템 심플 텍스트
+ * - 하이라이트 #A5C5B0 (흰끼 섞인 녹색)
  */
 
+/* ── Design tokens ── */
 :root {
-  --ifm-color-primary: #3b82f6;
-  --ifm-color-primary-dark: #2563eb;
-  --ifm-color-primary-darker: #1d4ed8;
-  --ifm-color-primary-darkest: #1e40af;
-  --ifm-color-primary-light: #60a5fa;
-  --ifm-color-primary-lighter: #93c5fd;
-  --ifm-color-primary-lightest: #bfdbfe;
+  --ifm-color-primary: #4a9068;
+  --ifm-color-primary-dark: #3d7856;
+  --ifm-color-primary-darker: #366b4d;
+  --ifm-color-primary-darkest: #285240;
+  --ifm-color-primary-light: #57a876;
+  --ifm-color-primary-lighter: #6db886;
+  --ifm-color-primary-lightest: #8fccaa;
 
-  --ifm-code-font-size: 90%;
-  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --ifm-code-font-size: 93.75%;
+  --ifm-font-family-base: 'NanumSquareRound', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ifm-font-family-heading: 'NanumSquareRound', ui-sans-serif, -apple-system, sans-serif;
+  --ifm-font-weight-base: 300;
+  --ifm-heading-font-weight: 500;
+  --ifm-font-family-monospace: 'D2Coding', ui-monospace, 'SFMono-Regular', monospace;
+  --ifm-line-height-base: 1.7;
 
-  --docusaurus-highlighted-code-line-bg: rgba(59, 130, 246, 0.15);
+  --content-max-width: 780px;
+  --docusaurus-highlighted-code-line-bg: rgba(165, 197, 176, 0.12);
 }
 
 [data-theme='dark'] {
-  --ifm-color-primary: #60a5fa;
-  --ifm-color-primary-dark: #3b82f6;
-  --ifm-color-primary-darker: #2563eb;
-  --ifm-color-primary-darkest: #1d4ed8;
-  --ifm-color-primary-light: #93c5fd;
-  --ifm-color-primary-lighter: #bfdbfe;
-  --ifm-color-primary-lightest: #dbeafe;
+  --ifm-color-primary: #A5C5B0;
+  --ifm-color-primary-dark: #8DB09A;
+  --ifm-color-primary-darker: #7DA08A;
+  --ifm-color-primary-darkest: #5C7D69;
+  --ifm-color-primary-light: #B8D3C4;
+  --ifm-color-primary-lighter: #CAE0D5;
+  --ifm-color-primary-lightest: #DCEEE5;
 
-  --ifm-background-color: #111827;
-  --ifm-background-surface-color: #1f2937;
-  --ifm-navbar-background-color: #111827;
-  --ifm-sidebar-background: #111827;
-  --ifm-footer-background-color: #0f172a;
-  --ifm-toc-border-color: #374151;
-  --ifm-color-emphasis-300: #374151;
+  /* 배경: 밝은 회색 다크 */
+  --ifm-background-color: #1a1a1a;
+  --ifm-background-surface-color: #222222;
+  --ifm-navbar-background-color: #1a1a1a;
+  --ifm-footer-background-color: #1a1a1a;
+  --ifm-toc-border-color: #2a2a2a;
+  --ifm-color-emphasis-300: #2a2a2a;
+  --ifm-hr-border-color: #2a2a2a;
 
-  --docusaurus-highlighted-code-line-bg: rgba(96, 165, 250, 0.12);
+  --sidebar-item-color: #888888;
+  --sidebar-item-hover-color: #d4d4d4;
+  --sidebar-active-color: #A5C5B0;
+  --sidebar-category-color: #555555;
+
+  --docusaurus-highlighted-code-line-bg: rgba(165, 197, 176, 0.1);
 }
 
 /* ── Navbar ── */
 .navbar {
-  border-bottom: 1px solid var(--ifm-toc-border-color);
   box-shadow: none;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding: 0 1.5rem;
 }
 
 [data-theme='dark'] .navbar {
-  border-bottom-color: #1f2937;
+  border-bottom-color: #252525;
 }
 
-/* ── Sidebar ── */
+.navbar__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ── 우측 TOC 완전 제거 ── */
+.theme-doc-toc-desktop {
+  display: none !important;
+}
+
+.docItemCol {
+  max-width: 100% !important;
+  flex: 1 !important;
+}
+
+.docItemContainer {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+/* ── Sidebar 컨테이너 ── */
 [data-theme='dark'] .theme-doc-sidebar-container {
-  border-right: 1px solid #1f2937;
+  background-color: #1a1a1a;
+  border-right: 1px solid #252525 !important;
+}
+
+.menu {
+  padding: 1rem 0.5rem !important;
+  font-size: 0.9375rem;
+}
+
+/* ── 카테고리 헤더 (대문자 + 희미) ── */
+.menu__list-item-collapsible > .menu__link {
+  color: var(--sidebar-category-color) !important;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent !important;
+  cursor: default;
+  padding-top: 1rem;
+}
+
+[data-theme='dark'] .menu__list-item-collapsible > .menu__link:hover {
+  background: transparent !important;
+  color: #666666 !important;
+}
+
+.menu__link--sublist-caret::after {
+  width: 1rem !important;
+  height: 1rem !important;
+  background-size: 1rem 1rem !important;
+}
+
+/* 기본 삼각형 아이콘 제거 */
+.menu__caret::before {
+  content: none !important;
+}
+
+/* 작은 chevron으로 교체 */
+.menu__caret::after {
+  content: '';
+  display: inline-block;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  opacity: 0.45;
+}
+
+/* collapsed 상태 → 오른쪽 방향 */
+.menu__list-item--collapsed .menu__caret::after {
+  transform: rotate(-45deg);
+}
+
+/* ── 사이드바 아이템 ── */
+.menu__link {
+  border-radius: 5px;
+  padding: 0.3rem 0.6rem;
+  transition: color 0.12s ease, background-color 0.12s ease;
+  line-height: 1.5;
 }
 
 [data-theme='dark'] .menu__link {
-  border-radius: 6px;
-  transition: background-color 0.15s ease;
+  color: var(--sidebar-item-color);
 }
 
 [data-theme='dark'] .menu__link:hover {
-  background-color: #1f2937;
+  background-color: #242424;
+  color: var(--sidebar-item-hover-color);
 }
 
+/* active: 배경 없음, 녹색 텍스트 + 좌측 인디케이터 */
 [data-theme='dark'] .menu__link--active {
-  background-color: rgba(96, 165, 250, 0.1);
-  color: #60a5fa;
+  background-color: transparent !important;
+  color: var(--sidebar-active-color) !important;
+  font-weight: 500;
 }
 
-/* ── Code blocks ── */
+[data-theme='dark'] .menu__link--active:not(.menu__list-item-collapsible .menu__link) {
+  box-shadow: inset 2px 0 0 #A5C5B0;
+  padding-left: 0.85rem;
+}
+
+.menu__list .menu__list {
+  padding-left: 0.75rem;
+}
+
+/* ── Breadcrumbs 제거 ── */
+.breadcrumbs {
+  display: none;
+}
+
+/* ── 콘텐츠 타이포그래피 ── */
+.markdown {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'NanumSquareRound', ui-sans-serif, sans-serif !important;
+}
+
+.markdown h1 {
+  font-size: 1.875rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.markdown h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding-bottom: 0.4rem;
+  margin-top: 2.5rem;
+}
+
+.markdown h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 1.75rem;
+}
+
+/* ── 코드 블록 ── */
 .prism-code {
   border-radius: 8px !important;
   font-size: 0.875rem !important;
-  line-height: 1.6 !important;
+  line-height: 1.65 !important;
 }
 
 [data-theme='dark'] pre {
-  background-color: #0f172a !important;
-  border: 1px solid #1f2937;
+  background-color: #141414 !important;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
 }
 
 /* inline code */
 [data-theme='dark'] code {
-  background-color: #1f2937;
-  border: 1px solid #374151;
+  background-color: #242424;
+  border: 1px solid #333333;
   border-radius: 4px;
   padding: 0.1em 0.4em;
+  font-size: 0.9375em;
+  color: #d4d4d4;
 }
 
 [data-theme='dark'] pre code {
-  background-color: transparent;
+  background: transparent;
   border: none;
   padding: 0;
-}
-
-/* ── Content area ── */
-.markdown h1,
-.markdown h2,
-.markdown h3 {
-  font-weight: 600;
-}
-
-.markdown h2 {
-  border-bottom: 1px solid var(--ifm-toc-border-color);
-  padding-bottom: 0.4rem;
-  margin-top: 2rem;
-}
-
-/* ── Table of Contents ── */
-[data-theme='dark'] .table-of-contents__link {
-  color: #9ca3af;
-}
-
-[data-theme='dark'] .table-of-contents__link:hover,
-[data-theme='dark'] .table-of-contents__link--active {
-  color: #60a5fa;
+  color: inherit;
 }
 
 /* ── Admonitions ── */
 [data-theme='dark'] .alert {
-  background-color: #1f2937;
-  border-left-width: 3px;
+  background-color: #202020;
+  border-left-width: 2px;
+  border-radius: 6px;
+}
+
+/* ── 이전/다음 페이지 네비게이션 ── */
+[data-theme='dark'] .pagination-nav__link {
+  border-color: #2a2a2a;
+  border-radius: 8px;
+  transition: border-color 0.12s ease;
+}
+
+[data-theme='dark'] .pagination-nav__link:hover {
+  border-color: #404040;
 }
 
 /* ── Footer ── */
 .footer {
   border-top: 1px solid var(--ifm-toc-border-color);
+  padding: 1.5rem 2rem;
+  background-color: var(--ifm-background-color) !important;
 }
 
-/* ── Scrollbar (Webkit) ── */
+[data-theme='dark'] .footer,
+[data-theme='dark'] .footer--dark {
+  background-color: var(--ifm-background-color) !important;
+  border-top-color: #252525;
+}
+
+/* copyright 우측 끝 */
+.footer__bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+  color: #999999;
+}
+
+/* ── Scrollbar ── */
 [data-theme='dark'] ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 [data-theme='dark'] ::-webkit-scrollbar-track {
@@ -139,6 +311,10 @@
 }
 
 [data-theme='dark'] ::-webkit-scrollbar-thumb {
-  background: #374151;
+  background: #333333;
   border-radius: 3px;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: #444444;
 }

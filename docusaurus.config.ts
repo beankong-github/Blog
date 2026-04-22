@@ -3,9 +3,10 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Dev Notes',
-  tagline: 'Unreal Engine & C++ 개발 노트',
-  favicon: 'img/favicon.ico',
+  plugins: [require.resolve('./plugins/blog-metadata')],
+  title: 'BK Devlog',
+  tagline: '게임 & AI 개발 정상 영업 중',
+  favicon: 'img/hero-spider.png',
 
   future: {
     v4: true,
@@ -31,9 +32,14 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/beankong-github/Blog/tree/main/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: false,
         },
         blog: {
           showReadingTime: true,
+          showLastUpdateTime: true,
+          blogSidebarCount: 'ALL',
+          blogSidebarTitle: 'All posts',
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -58,15 +64,15 @@ const config: Config = {
     },
     docs: {
       sidebar: {
-        hideable: true,
-        autoCollapseCategories: true,
+        hideable: false,
+        autoCollapseCategories: false,
       },
     },
     navbar: {
-      title: 'Dev Notes',
+      title: 'BK Devlog',
       logo: {
         alt: 'Dev Notes Logo',
-        src: 'img/logo.svg',
+        src: 'img/hero-spider.png',
       },
       items: [
         {
@@ -90,27 +96,8 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      links: [
-        {
-          title: 'Notes',
-          items: [
-            {label: 'Unreal Engine', to: '/docs/unreal-engine/intro'},
-            {label: 'C++', to: '/docs/cpp/intro'},
-            {label: 'Graphics', to: '/docs/graphics/intro'},
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {label: 'Blog', to: '/blog'},
-            {
-              label: 'GitHub',
-              href: 'https://github.com/beankong-github/Blog',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} Dev Notes. Built with Docusaurus.`,
+      links: [],
+      copyright: `Copyright © ${new Date().getFullYear()} BK Devlog`,
     },
     prism: {
       theme: prismThemes.oneDark,
