@@ -1,6 +1,8 @@
-# Website
+# BK Devlog
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+🔗 **https://blog-tau-two-81.vercel.app**
+
+게임 & AI 개발 기술 블로그. Docusaurus 기반으로 제작되었습니다.
 
 ## Installation
 
