@@ -1,6 +1,6 @@
 # BK Devlog
 
-🔗 **https://blog-tau-two-81.vercel.app**
+🔗 **https://bkdevlog.vercel.app**
 
 게임 & AI 개발 기술 블로그. Docusaurus 기반으로 제작되었습니다.
 

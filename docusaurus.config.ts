@@ -12,7 +12,7 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://blog-tau-two-81.vercel.app',
+  url: 'https://bkdevlog.vercel.app',
   baseUrl: '/',
 
   organizationName: 'beankong-github',
