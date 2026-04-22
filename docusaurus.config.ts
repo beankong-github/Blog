@@ -11,8 +11,7 @@ const config: Config = {
     v4: true,
   },
 
-  // TODO: Vercel 배포 후 실제 URL로 변경
-  url: 'https://your-site.vercel.app',
+  url: 'https://blog-it6f10zxk-beankong-githubs-projects.vercel.app',
   baseUrl: '/',
 
   organizationName: 'beankong-github',
