@@ -1,4 +1,4 @@
-import {type ReactNode, useState, useRef, useEffect} from 'react';
+import {type ReactNode, useState, useRef, useEffect, Fragment} from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -156,6 +156,64 @@ function TagPills({selectedTag, onSelect}: {selectedTag: string | null; onSelect
   );
 }
 
+type Star = {x: number; y: number; char: string; delay: number; dur: number; size: number};
+const STAR_CHARS = ['*', '+', '·', '×', '*', '*'];
+
+function StarField(): ReactNode {
+  const [stars, setStars] = useState<Star[]>([]);
+  const fieldRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let s = 12345;
+    const rand = () => { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0x100000000; };
+    // y: 0~42% → starField(200% 높이) 기준 첫 번째 절반(0~84% of section)에 배치
+    setStars(Array.from({length: 45}, () => ({
+      x:     rand() * 100,
+      y:     rand() * 48,
+      char:  STAR_CHARS[Math.floor(rand() * STAR_CHARS.length)],
+      delay: rand() * 5,
+      dur:   1.5 + rand() * 3,
+      size:  0.55 + rand() * 0.55,
+    })));
+  }, []);
+
+  useEffect(() => {
+    const field = fieldRef.current;
+    if (!field) return;
+    const period = field.offsetHeight / 2; // 200% 높이의 절반 = section 높이
+    let current = 0;
+    let target = 0;
+    let rafId: number;
+
+    const onWheel = (e: WheelEvent) => { target -= e.deltaY * 0.4; };
+
+    const tick = () => {
+      current += (target - current) * 0.07;
+      // current·target 동시 shift → lerp 연속성 유지
+      if (current <= -period) { current += period; target += period; }
+      if (current > 0)        { current -= period; target -= period; }
+      field.style.transform = `translateY(${current}px)`;
+      rafId = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('wheel', onWheel, {passive: true});
+    rafId = requestAnimationFrame(tick);
+    return () => { window.removeEventListener('wheel', onWheel); cancelAnimationFrame(rafId); };
+  }, []);
+
+  return (
+    <div className={styles.starField} ref={fieldRef} aria-hidden>
+      {stars.map((s, i) => (
+        // 두 벌 세로로 배치: 첫 번째 0~42%, 두 번째 50~92% (200% 높이 기준)
+        <Fragment key={i}>
+          <span className={styles.star} style={{left:`${s.x}%`, top:`${s.y}%`,      animationDelay:`${s.delay}s`, animationDuration:`${s.dur}s`, fontSize:`${s.size}rem`}}>{s.char}</span>
+          <span className={styles.star} style={{left:`${s.x}%`, top:`${s.y + 50}%`, animationDelay:`${s.delay}s`, animationDuration:`${s.dur}s`, fontSize:`${s.size}rem`}}>{s.char}</span>
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   const [tab, setTab] = useState<Tab>('notes');
@@ -172,6 +230,7 @@ export default function Home(): ReactNode {
 
         {/* ── Section 1 ── */}
         <section className={styles.section1}>
+          <div className={styles.starClip}><StarField /></div>
           <div className={styles.hero}>
             <img src="/img/hero-spider.png" alt="hero" className={styles.heroImage} />
             <div
