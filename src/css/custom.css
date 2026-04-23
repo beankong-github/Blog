@@ -233,6 +233,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 8px !important;
   font-size: 0.875rem !important;
   line-height: 1.65 !important;
+  padding: 15px !important;
 }
 
 [data-theme='dark'] pre {
